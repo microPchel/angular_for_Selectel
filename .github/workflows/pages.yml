@@ -37,7 +37,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/angular_for-selectel/browser
+          path: ./dist/angular_for_Selectel
 
   deploy:
     environment:
