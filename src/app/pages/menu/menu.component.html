@@ -1,0 +1,51 @@
+<section class="menu">
+  <div class="menu-top">
+    <a routerLink="/" class="back-link">← На главную</a>
+
+    <div class="menu-top-info">
+      <h1>{{ menuStore.activeMenu()?.title || 'Раздел не выбран' }}</h1>
+      <p>
+        Выбрано: {{ menuStore.selectedCount() }}
+        <span class="top-separator">•</span>
+        Сумма: {{ menuStore.selectedTotal() }}
+      </p>
+    </div>
+  </div>
+
+  <div class="menu-layout">
+    <aside class="menu-sidebar">
+      <h2>Разделы</h2>
+
+      @for (menu of menuStore.menus(); track menu.id) {
+      <button type="button"
+              class="menu-sidebar-button"
+              [class.active]="menu.id === menuStore.activeMenuId()"
+              (click)="setActiveMenu(menu.id)">
+        {{ menu.title }}
+      </button>
+      }
+    </aside>
+
+    <section class="menu-content">
+      @if (menuStore.activeMenu(); as currentMenu) {
+      <h2 class="menu-content-title">{{ currentMenu.title }}</h2>
+
+      <div class="items">
+        @for (item of currentMenu.items; track item.id) {
+        <label class="item-row">
+          <div class="item-left">
+            <input type="checkbox"
+                   [checked]="item.selected"
+                   (change)="onToggleItem(currentMenu.id, item.id, $event)" />
+
+            <span>{{ item.title }}</span>
+          </div>
+
+          <span class="item-value">{{ item.value }}</span>
+        </label>
+        }
+      </div>
+      }
+    </section>
+  </div>
+</section>
